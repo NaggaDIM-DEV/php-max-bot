@@ -1,0 +1,35 @@
+{
+    "name": "grayhoax/phpmaxbot",
+    "type": "framework",
+    "description": "MAX messenger bot framework written in PHP with full Bot API support.",
+    "keywords": ["bot", "max", "max-messenger", "max-bot", "bot-api", "php-max"],
+    "license": "GPL-3.0",
+    "authors": [
+        {"name": "GrayHoax"}
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0|^9.0|^10.0"
+    },
+    "suggest": {
+        "psr/log": "For PSR-3 compatible logging support",
+        "monolog/monolog": "For advanced logging features"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPMaxBot\\": "src/"
+        },
+        "files": ["src/PHPMaxBot.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPMaxBot\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
