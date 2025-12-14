@@ -349,10 +349,7 @@ class PHPMaxBot
         // Execute handler
         if ($run && $handler) {
             if (is_callable($handler)) {
-                if (!is_array($param)) {
-                    $param = [$param];
-                }
-                return call_user_func_array($handler, $param);
+                return call_user_func_array($handler, [$param]);
             } else {
                 // String response
                 return Bot::sendMessage($handler);
