@@ -5,7 +5,7 @@
  * Advanced example demonstrating keyboard and button usage
  */
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use PHPMaxBot\Helpers\Keyboard;
 

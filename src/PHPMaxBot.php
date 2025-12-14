@@ -291,8 +291,8 @@ class PHPMaxBot
         }
 
         // Handle message_created with commands
-        if ($updateType === 'message_created' && isset($update['message']['text'])) {
-            $text = $update['message']['text'];
+        if ($updateType === 'message_created' && isset($update['message']['body']) && isset($update['message']['body']['text'])) {
+            $text = $update['message']['body']['text'];
 
             // Check if it's a command (starts with /)
             if (strpos($text, '/') === 0) {
@@ -327,7 +327,7 @@ class PHPMaxBot
 
                 switch ($updateType) {
                     case 'message_created':
-                        $param = isset($update['message']['text']) ? $update['message']['text'] : '';
+                        $param = isset($update['message']['body']['text']) ? $update['message']['body']['text'] : '';
                         break;
                     case 'message_callback':
                         $param = isset($update['callback']['payload']) ? $update['callback']['payload'] : '';

@@ -5,7 +5,7 @@
  * Basic example showing command and event handling
  */
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $token = getenv('BOT_TOKEN');
 if (!$token) {

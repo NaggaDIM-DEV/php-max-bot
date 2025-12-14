@@ -57,6 +57,7 @@ class Bot
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_CUSTOMREQUEST => $method,
+            //CURLOPT_VERBOSE => true,
             CURLOPT_HTTPHEADER => [
                 'Authorization: ' . PHPMaxBot::$token,
                 'Content-Type: application/json'
@@ -271,13 +272,17 @@ class Bot
     public static function sendMessage($text, $extra = [])
     {
         $update = PHPMaxBot::$currentUpdate;
-
-        if (isset($update['message']['chat']['id'])) {
-            return self::sendMessageToChat($update['message']['chat']['id'], $text, $extra);
-        } elseif (isset($update['callback']['user']['id'])) {
-            return self::sendMessageToUser($update['callback']['user']['id'], $text, $extra);
-        } elseif (isset($update['user']['id'])) {
-            return self::sendMessageToUser($update['user']['id'], $text, $extra);
+        // Информация описала в методе https://dev.max.ru/docs-api/methods/GET/updates
+        if (isset($update['message']['sender']['user_id'])) {
+            return self::sendMessageToUser($update['message']['sender']['user_id'], $text, $extra);
+        } elseif (isset($update['callback']['sender']['user_id'])) {
+            return self::sendMessageToUser($update['callback']['sender']['user_id'], $text, $extra);
+        } elseif (isset($update['user']['user_id'])) {
+            return self::sendMessageToUser($update['user']['user_id'], $text, $extra);
+        } elseif (isset($update['chat']['dialog_with_user']['user_id'])) {
+            return self::sendMessageToUser($update['chat']['dialog_with_user']['user_id'], $text, $extra);
+        } elseif (isset($update['user_id'])) {
+            return self::sendMessageToUser($update['user_id'], $text, $extra);
         }
 
         throw new MaxBotException('Unable to determine recipient for message');
