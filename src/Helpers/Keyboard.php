@@ -50,6 +50,23 @@ class Keyboard
     }
 
     /**
+     * Create open_app button
+     *
+     * @param string $text Button text
+     * @param string $url Url of webapp
+     * @param array $extra Additional parameters (e.g., payload or contact_id)
+     * @return array Button structure
+     */
+    public static function open_appButton($text, $url, $extra = [])
+    {
+        return array_merge([
+            'type' => 'open_app',
+            'text' => $text,
+            'web_app' => $url
+        ], $extra);
+    }
+
+    /**
      * Create link button
      *
      * @param string $text Button text
