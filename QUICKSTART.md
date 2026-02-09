@@ -7,13 +7,13 @@
 ### 1. Через Composer (рекомендуется)
 
 ```bash
-composer require grayhoax/phpmaxbot
+composer require naggadim-dev/php-max-bot
 ```
 
 ### 2. Вручную
 
 ```bash
-git clone https://github.com/grayhoax/phpmaxbot.git
+git clone https://github.com/naggadim-dev/php-max-bot.git
 cd phpmaxbot
 composer install
 ```

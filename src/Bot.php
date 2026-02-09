@@ -2,8 +2,8 @@
 /**
  * Bot.php
  *
- * @author GrayHoax <grayhoax@grayhoax.ru>
- * @link https://github.com/grayhoax/phpmaxbot
+ * @author NaggaDIM-DEV <naggadim-dev@naggadim>
+ * @link https://github.com/naggadim-dev/php-max-bot
  * @license GPL-3.0
  */
 
@@ -268,28 +268,14 @@ class Bot
      * @param string $text
      * @param array $extra
      * @return array
+     * @throws MaxBotException
      */
     public static function sendMessage($text, $extra = [])
     {
-        $update = PHPMaxBot::$currentUpdate;
-        // Информация описала в методе https://dev.max.ru/docs-api/methods/GET/updates
-        if (isset($update['message']['sender']['user_id'])) {
-            return self::sendMessageToUser($update['message']['sender']['user_id'], $text, $extra);
-        } elseif (isset($update['callback']['sender']['user_id'])) {
-            return self::sendMessageToUser($update['callback']['sender']['user_id'], $text, $extra);
-        } elseif (isset($update['user']['user_id'])) {
-            return self::sendMessageToUser($update['user']['user_id'], $text, $extra);
-        } elseif (isset($update['chat']['dialog_with_user']['user_id'])) {
-            return self::sendMessageToUser($update['chat']['dialog_with_user']['user_id'], $text, $extra);
-        } elseif (isset($update['user_id'])) {
-            return self::sendMessageToUser($update['user_id'], $text, $extra);
-        } elseif (isset($extra['user_id'])) {
-            $user_id = $extra['user_id'];
-            unset($extra['user_id']);
-            return self::sendMessageToUser($user_id, $text, $extra);
-        }
+        $user_id = self::getUserID();
+        if(empty($user_id)) { throw new MaxBotException('Unable to determine recipient for message'); }
 
-        throw new MaxBotException('Unable to determine recipient for message');
+        return self::sendMessageToUser($user_id, $text, $extra);
     }
 
     /**
@@ -513,9 +499,56 @@ class Bot
     public static function getText()
     {
         $update = PHPMaxBot::$currentUpdate;
-        if (isset($update['message']['text'])) {
-            return $update['message']['text'];
-        }
+        if (isset($update['message']['text'])) { return $update['message']['text']; }
+        elseif (isset($update['message']['body']['text'])) { return $update['message']['body']['text']; }
+        return null;
+    }
+
+    /**
+     * Get message ID
+     *
+     * @return string|null
+     */
+    public static function getMessageID()
+    {
+        $update = PHPMaxBot::$currentUpdate;
+        if (isset($update['message']['mid'])) { return $update['message']['mid']; }
+        elseif (isset($update['message']['body']['mid'])) { return $update['message']['body']['mid']; }
+        return null;
+    }
+
+    /**
+     * Get user id
+     *
+     * @return int|null
+     */
+    public static function getUserID()
+    {
+        $update = PHPMaxBot::$currentUpdate;
+        // Информация описана в методе https://dev.max.ru/docs-api/methods/GET/updates
+        if(isset($update['callback']['user']['user_id'])) { return $update['callback']['user']['user_id']; }
+        elseif (isset($update['callback']['sender']['user_id'])) { return $update['callback']['sender']['user_id']; }
+        elseif (isset($update['message']['user']['user_id'])) { return $update['message']['user']['user_id']; }
+        elseif (isset($update['message']['body']['user']['user_id'])) { return $update['message']['body']['user']['user_id']; }
+        elseif (isset($update['message']['sender']['user_id'])) { return $update['message']['sender']['user_id']; }
+        elseif (isset($update['message']['body']['sender']['user_id'])) { return $update['message']['body']['sender']['user_id']; }
+        elseif (isset($update['user']['user_id'])) { return $update['user']['user_id']; }
+        elseif (isset($update['chat']['dialog_with_user']['user_id'])) { return $update['chat']['dialog_with_user']['user_id']; }
+        elseif (isset($update['user_id'])) { return $update['user_id']; }
+        elseif (isset($extra['user_id'])) { return $extra['user_id']; }
+
+        return null;
+    }
+
+    /**
+     * Get callback id
+     *
+     * @return string|null
+     */
+    public static function getCallbackID()
+    {
+        $update = PHPMaxBot::$currentUpdate;
+        if (isset($update['callback']['callback_id'])) { return $update['callback']['callback_id']; }
         return null;
     }
 
@@ -527,9 +560,7 @@ class Bot
     public static function getCallbackData()
     {
         $update = PHPMaxBot::$currentUpdate;
-        if (isset($update['callback']['payload'])) {
-            return $update['callback']['payload'];
-        }
+        if (isset($update['callback']['payload'])) { return $update['callback']['payload']; }
         return null;
     }
 }

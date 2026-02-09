@@ -1,11 +1,12 @@
 {
-    "name": "grayhoax/phpmaxbot",
+    "name": "naggadim-dev/php-max-bot",
     "type": "framework",
-    "description": "MAX messenger bot framework written in PHP with full Bot API support.",
+    "description": "MAX messenger bot framework written in PHP with full Bot API support. Fork with grayhoax/phpmaxbot",
     "keywords": ["bot", "max", "max-messenger", "max-bot", "bot-api", "php-max"],
     "license": "GPL-3.0",
     "authors": [
-        {"name": "GrayHoax"}
+        {"name": "GrayHoax"},
+        {"name": "NaggaDIM-DEV"}
     ],
     "require": {
         "php": ">=7.4",

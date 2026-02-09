@@ -2,8 +2,8 @@
 /**
  * ApiException.php
  *
- * @author GrayHoax <grayhoax@grayhoax.ru>
- * @link https://github.com/grayhoax/phpmaxbot
+ * @author NaggaDIM-DEV <naggadim-dev@naggadim>
+ * @link https://github.com/naggadim-dev/php-max-bot
  * @license GPL-3.0
  */
 

@@ -2,8 +2,8 @@
 /**
  * PHPMaxBot.php
  *
- * @author GrayHoax <grayhoax@grayhoax.ru>
- * @link https://github.com/grayhoax/phpmaxbot
+ * @author NaggaDIM-DEV <naggadim-dev@naggadim>
+ * @link https://github.com/naggadim-dev/php-max-bot
  * @license GPL-3.0
  */
 
@@ -160,16 +160,9 @@ class PHPMaxBot
     {
         try {
             if (php_sapi_name() == 'cli') {
-                echo 'PHPMaxBot version ' . self::$version;
-                echo "\nMode\t: Long Polling\n";
-                $options = getopt('q', ['quiet']);
-                if (isset($options['q']) || isset($options['quiet'])) {
-                    self::$debug = false;
-                }
-                echo "Debug\t: " . (self::$debug ? 'ON' : 'OFF') . "\n";
-                $this->longPoll($allowedUpdates);
+                $this->startLongPolling($allowedUpdates);
             } else {
-                $this->webhook();
+                $this->startWebhooks();
             }
 
             return true;
@@ -177,6 +170,35 @@ class PHPMaxBot
             echo $e->getMessage() . "\n";
             return false;
         }
+    }
+
+    /**
+     * Start the bot with long polling mode
+     *
+     * @param array $allowedUpdates Array of allowed update types
+     * @return bool
+     * @throws Exception
+     */
+    public function startLongPolling($allowedUpdates = []): bool
+    {
+        echo 'PHPMaxBot version ' . self::$version;
+        echo "\nMode\t: Long Polling\n";
+        $options = getopt('q', ['quiet']);
+        if (isset($options['q']) || isset($options['quiet'])) {
+            self::$debug = false;
+        }
+        echo "Debug\t: " . (self::$debug ? 'ON' : 'OFF') . "\n";
+        $this->longPoll($allowedUpdates);
+    }
+
+    /**
+     * Start the bot with webhooks mode
+     *
+     * @throws Exception
+     */
+    public function startWebhooks(): void
+    {
+        $this->webhook();
     }
 
     /**

@@ -24,14 +24,14 @@ PHP библиотека для создания ботов в мессендж�
 ### Через Composer
 
 ```bash
-composer require grayhoax/phpmaxbot
+composer require naggadim-dev/php-max-bot
 ```
 
 ### Вручную
 
 1. Клонируйте репозиторий:
 ```bash
-git clone https://github.com/grayhoax/phpmaxbot.git
+git clone https://github.com/naggadim-dev/php-max-bot.git
 ```
 
 2. Подключите автозагрузку:
@@ -412,7 +412,7 @@ GPL-3.0
 
 ## Автор
 
-GrayHoax <grayhoax@grayhoax.ru>
+NaggaDIM-DEV <naggadim-dev@naggadim>
 
 ## Ссылки
 
