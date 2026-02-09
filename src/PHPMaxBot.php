@@ -193,22 +193,27 @@ class PHPMaxBot
 
     /**
      * Start the bot with webhooks mode
+     * @param array|null $data request data
      *
      * @throws Exception
      */
-    public function startWebhooks(): void
+    public function startWebhooks($data = null): void
     {
-        $this->webhook();
+        $this->webhook($data);
     }
 
     /**
      * Webhook mode
+     * @param array|null $data request data
      */
-    private function webhook()
+    private function webhook($data = null)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $input = file_get_contents('php://input');
-            self::$currentUpdate = json_decode($input, true);
+            if(!empty($data)) { self::$currentUpdate = $data; }
+            else {
+                $input = file_get_contents('php://input');
+                self::$currentUpdate = json_decode($input, true);
+            }
 
             if (self::$currentUpdate === null) {
                 http_response_code(400);
